@@ -1,0 +1,48 @@
+var express = require('express');
+var router = express.Router();
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Express' });
+});
+
+router.get('/test',function(req,res,next){
+	var obj = {
+		code:200,
+		msg:"ok"
+	}
+	res.send(obj);
+});
+
+router.post("/test",function(req,res,next){
+	var obj = {
+		code:200,
+		msg:"post ok"
+	};
+	res.send(obj);
+});
+
+router.get("/action/login",function(req,res,next){
+	var username = req.param("username");
+	var pwd = req.param("password");
+	if(username==="admin"&&pwd==="admin"){
+		res.cookie("-goahead-session-","::webs.session::b9555e0ca83d5bc1947e1c61f7dd8da1",{domain: '192.168.0.114:3000', path: '/'})
+		res.send('<html><head></head><body>This document has moved to a new <a href="http://192.168.0.114:3000/">location</a>.Please update your documents to reflect the new location.</body></html>');
+	}else{
+		res.location("http://192.168.0.114/login?warn=loginfailed")
+		res.send('<html><head></head><body>\r\nThis document has moved to a new <a href="http://192.168.0.114:3000/login?warn=loginfailed">location</a>.\r\nPlease update your documents to reflect the new location.\r\n</body></html>');
+	}
+});
+
+router.get("/login",function(req,res,next){
+	var warn = req.param("warn");
+	res.send({"code":200,"result":{"warn":warn}});
+});
+
+router.get("/he",function(req,res,next){
+	var b = new Buffer("{'he':'true'}");
+
+	res.send(b.toString('base64'));
+});
+
+module.exports = router;

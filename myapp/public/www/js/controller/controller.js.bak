@@ -1,0 +1,13 @@
+var phoneApp = angular.module('phoneApp',[]);
+
+phoneApp.controller("PhoneListCtrl",PhoneListCtrl);
+
+function PhoneListCtrl($scope) {
+	$scope.phones = [ {
+		"name":"Nancy",
+		"phone":"123456789"
+	},{
+		"name":"Marry",
+		"phone":"66669999"
+	} ];
+}
